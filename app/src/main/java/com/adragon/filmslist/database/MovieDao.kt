@@ -24,4 +24,7 @@ interface MovieDao {
 
     @Query("SELECT * FROM movie_table WHERE uniqueKey = :key")
     suspend fun getMovieByKey(key: String): List<Movie>
+
+    @Query("UPDATE movie_table SET rank = :newRating WHERE uniqueKey = :key")
+    suspend fun changeRating(key: String, newRating: Int): Int
 }

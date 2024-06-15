@@ -20,7 +20,8 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
         movies = repository.getAllMovies()
     }
 
-    fun getAllMovies() = repository.getAllMovies()
+    private fun getAllMovies() = repository.getAllMovies()
+
 
     fun insert(movie: Movie) = viewModelScope.launch {
         val founded = repository.getMovieByKey(movie.uniqueKey)
@@ -30,5 +31,9 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
 
     fun delete(movie: Movie) = viewModelScope.launch {
         repository.delete(movie)
+    }
+
+    fun changeRating(movie: Movie, newRating:Int) = viewModelScope.launch {
+        repository.changeRating(movie.uniqueKey, newRating)
     }
 }

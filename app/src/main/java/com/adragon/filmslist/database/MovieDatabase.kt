@@ -9,7 +9,7 @@ import com.adragon.filmslist.movie.MovieImageConverter
 import com.adragon.filmslist.movie.info.Movie
 
 
-@Database(entities = [Movie::class], version = 8, exportSchema = false)
+@Database(entities = [Movie::class], version = 9, exportSchema = false)
 @TypeConverters(MovieImageConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
     companion object {

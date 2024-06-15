@@ -18,4 +18,8 @@ class MovieRepository(private val movieDao: MovieDao?) {
 
     suspend fun getMovieByKey(keyToSearch: String) =
         movieDao!!.getMovieByKey(keyToSearch)
+
+    suspend fun changeRating(keyToSearch: String, newRating:Int) =
+        movieDao!!.changeRating(keyToSearch, newRating)
+
 }

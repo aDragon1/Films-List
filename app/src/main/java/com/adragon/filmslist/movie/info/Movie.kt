@@ -15,7 +15,7 @@ data class Movie(
     val title: String,
 
     @ColumnInfo(name = "rank")
-    val rank: Int,
+    val rating: Int,
 
     @ColumnInfo(name = "id")
     val id: String,
@@ -29,7 +29,7 @@ data class Movie(
 
     @Transient
     @PrimaryKey
-    val uniqueKey: String = generateUniqueKey(title, rank, id)
+    val uniqueKey: String = generateUniqueKey(title, rating, id)
 ) {
     companion object {
         fun generateUniqueKey(title: String, rank: Int, id: String): String {
@@ -49,7 +49,7 @@ data class Movie(
         other as Movie
 
         if (title != other.title) return false
-        if (rank != other.rank) return false
+        if (rating != other.rating) return false
         if (id != other.id) return false
 //        if (!movieBitmapByteArray.contentEquals(other.movieBitmapByteArray)) return false
         return uniqueKey == other.uniqueKey
@@ -57,7 +57,7 @@ data class Movie(
 
     override fun hashCode(): Int {
         var result = title.hashCode()
-        result = 31 * result + rank
+        result = 31 * result + rating
         result = 31 * result + id.hashCode()
 //        result = 31 * result + movieBitmapByteArray.contentHashCode()
         result = 31 * result + uniqueKey.hashCode()

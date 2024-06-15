@@ -1,15 +1,18 @@
 package com.adragon.filmslist
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.SearchManager
+import android.content.DialogInterface
 import android.database.MatrixCursor
 import android.graphics.Canvas
 import android.os.Bundle
 import android.provider.BaseColumns
+import android.text.InputType
 import android.util.Log
 import android.widget.CursorAdapter
+import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -34,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var filmsListRecyclerView: RecyclerView
     private lateinit var listSizeTextView: TextView
 
-
     private var suggestions = emptyList<Movie>()
 
     private val req = Request()
@@ -52,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         filmsListRecyclerView = findViewById(R.id.filmsRecyclerView)
         filmsListRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
 
-
         val icon1 = SearchManager.SUGGEST_COLUMN_ICON_1
         val text1 = SearchManager.SUGGEST_COLUMN_TEXT_1
 
@@ -69,7 +70,25 @@ class MainActivity : AppCompatActivity() {
         movieViewModel.movies.observe(this) { movies ->
             movieAdapter.fillData(movies)
             filmsListRecyclerView.adapter = movieAdapter
-            listSizeTextView.text = "Вы добавили ${movies.size} фильмов / сериалов"
+            listSizeTextView.text = "Добавлено фильмов/сериалов: ${movies.size}"
+        }
+
+        movieAdapter.setOnItemClickListener {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder.setTitle("Enter rating")
+            val input = EditText(this)
+            input.inputType = InputType.TYPE_CLASS_NUMBER
+            builder.setView(input)
+            builder.setPositiveButton("OK") { _, _ ->
+
+                val newRating = input.text.toString().toInt().coerceIn(0..10)
+
+                Log.d("mytag", "input text - $newRating")
+                movieViewModel.changeRating(it, newRating)
+            }
+            builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+
+            builder.show()
         }
 
         lifecycleScope.launch {
@@ -78,8 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String?): Boolean {
-                Log.d("mytag", "text change")
-                if (query == null || suggestions.isEmpty()) return false
+                if (query.isNullOrEmpty()) return false
 
                 val cursor = MatrixCursor(arrayOf(BaseColumns._ID, icon1, text1))
 
@@ -97,17 +115,32 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextSubmit(text: String?): Boolean {
-                if (text.isNullOrEmpty()) return false
+                if (text.isNullOrEmpty()) {
+                    suggestions = emptyList()
+                    return false
+                }
 
                 lifecycleScope.launch {
                     suggestions = Utility().getMovie(req, text)
                     Log.d("mytag", "suggestions:")
                     suggestions.forEach {
-                        Log.d("mytag", "${it.title} - ${it.rank}")
+                        Log.d("mytag", "${it.title} - ${it.rating}")
                     }
                     onQueryTextChange(text)
                 }
                 return false
+            }
+        })
+        searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
+            override fun onSuggestionSelect(position: Int): Boolean {
+                return false
+            }
+
+            override fun onSuggestionClick(position: Int): Boolean {
+                val clickedMovie = suggestions[position]
+                Log.d("mytag", "clicked $position sug - $clickedMovie")
+                movieViewModel.insert(clickedMovie)
+                return true
             }
         })
     }

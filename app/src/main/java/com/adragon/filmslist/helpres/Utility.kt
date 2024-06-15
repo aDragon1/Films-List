@@ -35,6 +35,8 @@ class Utility {
 
 //        val imageDownloader = ImageDownloader(req.getClient())
         val obj = JSONObject(response)
+        val str = obj.toString(2)
+        Log.d("mytag", str)
         val results = obj.getJSONObject("titleResults").getJSONArray("results")
 
 

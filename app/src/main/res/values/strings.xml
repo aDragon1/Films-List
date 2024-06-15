@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FilmsList</string>
+    <string name="filmSearchHint">Введите название фильма или сериала</string>
+    <string name="searchString">Поиск</string>
+</resources>

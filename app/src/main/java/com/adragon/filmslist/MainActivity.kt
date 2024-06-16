@@ -3,7 +3,9 @@ package com.adragon.filmslist
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.SearchManager
-import android.content.DialogInterface
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.database.MatrixCursor
 import android.graphics.Canvas
 import android.os.Bundle
@@ -12,6 +14,7 @@ import android.text.InputType
 import android.util.Log
 import android.widget.CursorAdapter
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -31,9 +34,9 @@ import com.adragon.filmslist.movie.info.Movie
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.coroutines.launch
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var searchView: SearchView
+    private lateinit var shareImageButton: ImageButton
     private lateinit var filmsListRecyclerView: RecyclerView
     private lateinit var listSizeTextView: TextView
 
@@ -49,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         searchView = findViewById(R.id.searchView)
+        shareImageButton = findViewById(R.id.shareImageButton)
         listSizeTextView = findViewById(R.id.listSizeTextView)
 
         filmsListRecyclerView = findViewById(R.id.filmsRecyclerView)
@@ -97,8 +101,10 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String?): Boolean {
-                if (query.isNullOrEmpty()) return false
-
+                if (query.isNullOrEmpty()) {
+                    suggestions = emptyList()
+                    return false
+                }
                 val cursor = MatrixCursor(arrayOf(BaseColumns._ID, icon1, text1))
 
                 suggestions.forEachIndexed { i, s ->
@@ -106,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                         cursor.addRow(
                             arrayOf(i, R.drawable.decorator_delete_asset, s.title)
                         )
-                        Log.d("mytag", "found one more mathch - ${s.title}")
+                        Log.d("mytag", "found one more match - ${s.title} - ${s.id}")
                     }
                 }
 
@@ -131,6 +137,7 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
+
         searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
             override fun onSuggestionSelect(position: Int): Boolean {
                 return false
@@ -143,6 +150,17 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         })
+
+        shareImageButton.setOnClickListener {
+            val names = movieAdapter.getFilmNames()
+            val indexedNames =
+                names.mapIndexed { i, entry -> "${i + 1}) ${entry.first} - ${entry.second}" }
+            val namesAsString = indexedNames.joinToString { it }
+            val namesAsStringEdited = namesAsString.replace(", ", "\n")
+
+            setClipboard(namesAsStringEdited)
+            Log.d("mytag", namesAsStringEdited)
+        }
     }
 
 
@@ -182,4 +200,10 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         })
+
+    private fun setClipboard(text: String) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("copied films", text)
+        clipboard.setPrimaryClip(clip)
+    }
 }

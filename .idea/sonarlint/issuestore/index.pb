@@ -29,8 +29,6 @@ s
 Capp/src/main/java/com/adragon/filmslist/database/MovieRepository.kt,0\c\0ce2d5c1df595e17959de9da30b69b99d9c5b3d4
 j
 :app/src/main/java/com/adragon/filmslist/helpres/Utility.kt,9\f\9f4db3de0d74d69c8c43540e62d78634f3b4cd0c
-r
-Bapp/src/main/java/com/adragon/filmslist/helpres/ImageDownloader.kt,7\9\792825ae34cc49779df10a07592807d5a81b048d
 Å
 Q.idea/sonarlint/securityhotspotstore/d/b/dbcff70658daf80b53ce624f6adcaa529df5ed8d,e\c\ec4317fc3093e8c354ef226260d7fd566c3957fb
 j
@@ -84,8 +82,6 @@ G.idea/sonarlint/issuestore/0/c/0ce2d5c1df595e17959de9da30b69b99d9c5b3d4,7\e\7e
 gradlew.bat,2\a\2a45a911a8f1836b0b6c5b758962572012d8f8c3
 C
 settings.gradle.kts,7\4\749edfcc96398253e5b3416184e95c46621da850
-Å
-Q.idea/sonarlint/securityhotspotstore/7/9/792825ae34cc49779df10a07592807d5a81b048d,7\3\73e50ee63deea4d27246b91c3d3e66a24923f64a
 w
 G.idea/sonarlint/issuestore/8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e,3\2\32813322c99a6c8a141ab2dc12bc10af3425f1b4
 >
@@ -196,8 +192,6 @@ G.idea/sonarlint/issuestore/e/0/e043fe3fa17c687192e4a771a7adfb6dc19131f8,3\8\38
 Q.idea/sonarlint/securityhotspotstore/0/8/08df243f82cf4f19048e99c6c342d0bc3424b4ae,c\1\c17184943b5656f33f717f27a7b937ad508055f8
 w
 G.idea/sonarlint/issuestore/e/c/ec4317fc3093e8c354ef226260d7fd566c3957fb,f\0\f06e4b9b883c4d53c45f2b8a028d48790a4ce86c
-Å
-Q.idea/sonarlint/securityhotspotstore/7/3/73e50ee63deea4d27246b91c3d3e66a24923f64a,f\9\f92a6395dae2a6965521d5728e32b61c72781282
 w
 G.idea/sonarlint/issuestore/e/c/ec50850f5a3d223e29e7d3c8990804a847b9f3e5,c\9\c9a3c7d7ade0c40bf02f1d0f5f05a012884e52d8
 Å
@@ -258,8 +252,6 @@ w
 G.idea/sonarlint/issuestore/7/e/7e4dab7a2a777b6ff55889581b156af2a59338c2,a\1\a1a2afdc36c65eebf2deb38f43cd537d14bddcb1
 w
 G.idea/sonarlint/issuestore/7/f/7fcac164c7a46b8fc6411ea93226c884af6044db,0\f\0f0c447a5aebc17d71e2c1c8fd6c2cff2ad4c971
-w
-G.idea/sonarlint/issuestore/7/3/73e50ee63deea4d27246b91c3d3e66a24923f64a,f\6\f64dc0f6d91124d99a7e345acfa09cfa64531909
 Å
 Q.idea/sonarlint/securityhotspotstore/f/0/f06e4b9b883c4d53c45f2b8a028d48790a4ce86c,e\2\e2a3b5d3b6706c7d55347c7ded9bd7f914bf0ac2
 Å

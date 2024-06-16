@@ -18,7 +18,7 @@ class MovieAdapter(private val context: Context) :
     private var movies: List<Movie> = emptyList()
     private var checkedId = booleanArrayOf(false)
 
-    private var itemClickListener: OnItemClickListener = OnItemClickListener { null }
+    private var itemClickListener: OnItemClickListener = OnItemClickListener {  }
 
     fun interface OnItemClickListener {
         fun onItemClick(movie: Movie)
@@ -62,14 +62,13 @@ class MovieAdapter(private val context: Context) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         movies[position].apply {
-//            holder.filmImageImageView.setImageBitmap(decodeBitmap())
             val cond = if (rating == -1) "" else " - $rating"
             holder.filmNameTextView.text = "$title$cond"
         }
     }
 
     fun getItem(id: Int) = if (id in movies.indices) movies[id] else null
-
+    fun getFilmNames() = movies.map { it.title to it.id }
     fun fillData(m: List<Movie>) {
         movies = m
         checkedId = BooleanArray(movies.size) { false }

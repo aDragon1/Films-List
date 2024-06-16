@@ -6,13 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
+    <LinearLayout
+        android:id="@+id/searchBarLL"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/shareImageButton"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/button_press_selector"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:src="@mipmap/share_image" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/listSizeTextView"
@@ -21,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView" />
+        app:layout_constraintTop_toBottomOf="@id/searchBarLL" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/filmsRecyclerView"
